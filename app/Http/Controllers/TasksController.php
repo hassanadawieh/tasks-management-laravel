@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
+use App\Events\TaskCreatedEvent;
+use App\Events\TaskUpdatedEvent;
+use App\Events\TaskDeletedEvent;
+
 
 class TasksController extends Controller
 {
@@ -35,6 +39,8 @@ class TasksController extends Controller
 
         $task->save();
 
+        event(new TaskCreatedEvent($task));
+
         return response()->json([
             'message' => 'task created successfully',
         ]);
@@ -55,6 +61,8 @@ class TasksController extends Controller
 
     $task->save();
 
+    event(new TaskUpdatedEvent($task));
+
     return response()->json(['message' => 'Task updated successfully', 'data' => $task]);
     }
 
@@ -66,7 +74,9 @@ class TasksController extends Controller
         return response()->json(['message' => 'Task not found'], 404);
     }
 
+    event(new TaskDeletedEvent($task));
     $task->delete();
+
 
     return response()->json(['message' => 'Task deleted successfully']);
     }

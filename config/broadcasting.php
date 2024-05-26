@@ -2,6 +2,11 @@
 
 return [
 
+    'options' => [
+        'cluster' => 'ap2',
+        'useTLS' => true
+      ],
+
     /*
     |--------------------------------------------------------------------------
     | Default Broadcaster
@@ -44,8 +49,13 @@ return [
                 'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
             ],
             'client_options' => [
-                // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
+                // Guzzle client options: "https://docs.guzzlephp.org/en/stable/request-options.html"
+                'verify' => 'C:\xampp\php\cacert.pem', // Path to the CA bundle
             ],
+            'options' => [
+                'cluster' => 'ap2',
+                'useTLS' => true
+              ],
         ],
 
         'ably' => [
